@@ -370,15 +370,13 @@ const DATA=[
 ["Blanquette de veau","9,90",PR,"épaule de veau, champignons, pommes de terre, carottes"],["Bœuf bourguignon","9,90",PR],["Cassoulet","9,90",PR,"confit de canard, saucisse de Toulouse, haricots blancs, poitrine fumée"],["Choucroute","12,10",PR],["Choucroute de la mer","15,10",PR],["Coq au vin","8,50",PR],["Couscous royal","12,90",PR,"agneau, poulet, merguez, légumes"],["Jambalaya","9,70",PR,"poulet, saucisse fumée, riz"],["Langue de bœuf sauce piquante","8,70",PR,"2 tranches, pommes vapeur"],["Marmite sarthoise","9,50",PR,"lapin, poulet, chou, carottes"],["Paella","11,50",PR,"agneau, poulet, crevettes, encornets, moules, chorizo"],["Parmentier de cabillaud","8,50",PR,"450 g avec salade"],["Pot-au-feu","9,90",PR,"jarret de bœuf, poireau, chou, carottes, navet, pommes de terre"],["Potée sarthoise","9,80",PR,"chou, carottes, navet, jarret, saucisses, poitrine fumée, pommes de terre"],["Poule au pot","7,90",PR],["Poulet basquaise","7,90",PR,"poulet entier, riz, tomate, poivron, piment d'Espelette, ail"],["Poulet yassa","7,90",PR,"cuisse marinée sauce citron, riz"],["Rougail saucisse","7,10",PR,"saucisses nature & fumée, riz, gingembre, tomate, oignons"],["Tajine","10,70",PR,"agneau, poulet, courgette, carotte, aubergine, olives, cumin, coriandre, abricots secs"],["Tartiflette","8,70",PR,"450 g avec salade"],["Veau marengo","9,10",PR]]}
 ];
 
-const PROSEC={id:"progrid",t:"Vos tarifs demi-gros",st:"Tarifs professionnels — confirmés par la boutique",rows:[
-["Rillettes 115 g","1,95",P],["Rillettes 250 g","3,25",P],["Rillettes 500 g","5,80",P],
-["Chipolatas nature","14,96",K,"remise −15 % sur prix boutique — à confirmer"],
-["Chipolatas fines herbes","15,39",K,"remise −15 % sur prix boutique — à confirmer"],
-["Merguez","15,56",K,"remise −15 % sur prix boutique — à confirmer"]]};
-const PLATSEC={id:"platgrid",t:"Vos plateaux repas",st:"Tarifs préférentiels — entreprises, mairies & associations",rows:[
-["Plateau repas Classique","12,10",PR,"Salade piémontaise · Rillettes · Pâté de campagne · Rosette · Roast-beef · Rôti de porc"],
-["Plateau repas Tradition","13,50",PR,"3 salades au choix · Rillettes · Saucisson à l'ail · Andouille · Rosette · Roast-beef · Rôti de veau · Fromages · Sauces"],
-["Plateau repas Prestige","14,90",PR,"3 salades au choix · Coupe cocktail · Rillettes · Marquise au jambon de Bayonne · Terrine de Bourgogne · Rôti de veau · Rôti de bœuf · Plateau de fromages · Salade de fruits"]]};
+const PROSEC={id:"progrid",t:"Vos produits demi-gros",st:"Vos tarifs préférentiels sont confirmés à la commande",rows:[
+["Rillettes 115 g","",P],["Rillettes 250 g","",P],["Rillettes 500 g","",P],
+["Chipolatas nature","",K],["Chipolatas fines herbes","",K],["Merguez","",K]]};
+const PLATSEC={id:"platgrid",t:"Vos plateaux repas",st:"Vos tarifs préférentiels sont confirmés à la commande",rows:[
+["Plateau repas Classique","",PR,"Salade piémontaise · Rillettes · Pâté de campagne · Rosette · Roast-beef · Rôti de porc"],
+["Plateau repas Tradition","",PR,"3 salades au choix · Rillettes · Saucisson à l'ail · Andouille · Rosette · Roast-beef · Rôti de veau · Fromages · Sauces"],
+["Plateau repas Prestige","",PR,"3 salades au choix · Coupe cocktail · Rillettes · Marquise au jambon de Bayonne · Terrine de Bourgogne · Rôti de veau · Rôti de bœuf · Plateau de fromages · Salade de fruits"]]};
 
 const CODES={pro:"PRO72",plateaux:"PLATEAU72"};
 const RUPTURES=[]; /* Henriette : ["Produit","depuis X jours","retour prévu le …"] */
@@ -478,10 +476,10 @@ function gateHTML(kind,titre,desc){
 const proContent=`
 <div class="card rv"><h3>Bienvenue dans votre <em>espace professionnel</em></h3>
 <p>Cet espace est exclusivement réservé à nos clients professionnels. Sélectionnez les quantités souhaitées à l'aide des boutons <b>+</b> et <b>−</b>, puis validez votre commande. Celle-ci sera préparée et livrée selon votre jour de livraison habituel.</p>
-<p>Pour les autres produits du catalogue, la remise habituelle s'applique sur le prix boutique — confirmée à la commande.</p></div>`;
+<p>Vos <b>tarifs préférentiels</b> s'appliquent automatiquement et vous sont <b>confirmés à la commande</b> — ils ne sont pas affichés en ligne, pour rester confidentiels.</p></div>`;
 const plateauxContent=`
 <div class="card rv"><h3>Plateaux repas — <em>entreprises, mairies & associations</em></h3>
-<p>Vos plateaux habituels, livrés ou à retirer, à vos <b>tarifs préférentiels</b>. Touchez <b>+</b> puis choisissez le <b>nombre de personnes</b> avec les boutons + et − du bon de commande.</p>
+<p>Vos plateaux habituels, livrés ou à retirer, à vos <b>tarifs préférentiels</b> (confirmés à la commande, non affichés en ligne). Touchez <b>+</b> puis choisissez le <b>nombre de personnes</b> avec les boutons + et − du bon de commande.</p>
 <p><i>Compositions sur mesure possibles — nous consulter au 02 43 89 00 56.</i></p></div>`;
 
 let obs=null;
