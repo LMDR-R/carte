@@ -381,8 +381,7 @@ function rowsHTML(catRows){
 function catHTML(sec,i){
   const num=(i!==undefined)?String(i+1).padStart(2,"0"):"◆";
   return `<section class="chap rv" data-sec="${sec.id}" id="sec-${sec.id}">
-  <div class="chap-head"><div class="chap-num">${num}</div><h2>${sec.t}</h2><div class="chap-st">${sec.st||""}</div><div class="chap-orn">❦</div>
-  <button class="share" onclick="copierSection('${sec.id}')">📋 Copier cette carte</button></div>
+  <div class="chap-head"><div class="chap-num">${num}</div><h2>${sec.t}</h2><div class="chap-st">${sec.st||""}</div><div class="chap-orn">❦</div></div>
   <div class="menu-card">${rowsHTML(sec.rows)}</div></section>`;
 }
 function chipsHTML(secs){return `<div class="chips">${secs.map(s=>`<button onclick="jump('${s.id}')">${s.t}</button>`).join("")}</div>`;}
