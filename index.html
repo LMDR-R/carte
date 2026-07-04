@@ -575,6 +575,7 @@ function copierCommande(){navigator.clipboard.writeText(msgCommande()).then(()=>
 function envoyerWA(){window.open("https://wa.me/33620772484?text="+encodeURIComponent(msgCommande()));}
 function envoyerMail(){location.href="mailto:lamaisondesrillettes@bbox.fr?subject="+encodeURIComponent("Commande — La Maison des Rillettes")+"&body="+encodeURIComponent(msgCommande());}
 
+window.addEventListener("scroll",function(){var b=document.getElementById("toTop");if(b)b.classList.toggle("show",(window.scrollY||document.documentElement.scrollTop||0)>480);},{passive:true});
 try{show("catalogue");}catch(e){try{content.innerHTML="";show("catalogue");}catch(_){}}
 document.querySelectorAll(".rv").forEach(function(el){el.classList.add("in");});
 </script>
