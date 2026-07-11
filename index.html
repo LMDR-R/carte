@@ -289,7 +289,8 @@ footer .lg{margin-top:24px;font-size:11.5px;letter-spacing:1.5px;color:#79683F}
       <option>Expédition Chronofresh (produits frais)</option>
       <option>Expédition Colissimo (bocaux stérilisés)</option>
     </select></div>
-  <div class="cfield"><label>Pour quel jour ?</label><input id="cdate" placeholder="ex : samedi matin"></div>
+  <div class="cfield"><label>Pour quel jour ?</label><input type="date" id="cdate"></div>
+  <div class="cfield"><label>Moment de la journée</label><select id="cmoment"><option>Matin</option><option>Après-midi</option><option>Peu importe</option></select></div>
   <div class="cfield"><label>Nom et téléphone</label><input id="cnom" placeholder="ex : Mme Martin — 06 12 34 56 78"></div>
   <div class="cfield"><label>Remarques (adresse si livraison, poids particulier, précisions…)</label><textarea id="cnote" rows="2"></textarea></div>
   <div class="cbtns">
@@ -503,7 +504,20 @@ function unlock(kind){
 }
 function filtrer(){
   const q=document.getElementById("q").value.toLowerCase().trim();
-  document.querySelectorAll(".row").forEach(r=>{r.style.display=r.dataset.n.includes(q)?"":"none";});
+  const searching=q.length>0;
+  document.querySelectorAll(".row").forEach(r=>{r.style.display=(!searching||r.dataset.n.includes(q))?"":"none";});
+  document.querySelectorAll(".trophy,.phband,.chips,.subcat,#helpbar").forEach(e=>{e.style.display=searching?"none":"";});
+  let found=0;
+  document.querySelectorAll("section.chap").forEach(sec=>{
+    if(!searching){sec.style.display="";return;}
+    const vis=[...sec.querySelectorAll(".row")].some(r=>r.style.display!=="none");
+    sec.style.display=vis?"":"none"; if(vis)found++;
+  });
+  let nz=document.getElementById("noresult");
+  if(searching&&!found){
+    if(!nz){nz=document.createElement("p");nz.id="noresult";nz.style.cssText="text-align:center;color:var(--mut);margin:26px 8px;font-size:17px";document.getElementById("content").prepend(nz);}
+    nz.textContent="Aucun produit trouvé pour « "+q+" ».";nz.style.display="";
+  }else if(nz){nz.style.display="none";}
 }
 
 function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",1700);}
@@ -560,13 +574,14 @@ function majCart(){
 }
 function togglecart(v){document.getElementById("cartpanel").style.display=v?"block":"none";}
 function msgCommande(){
-  let m=`🥇 COMMANDE — La Maison des Rillettes\n\n`;let tot=0,pes=false;
+  let m=`Bonjour La Maison des Rillettes 👋\n\nJe souhaite passer la commande suivante :\n\n`;let tot=0,pes=false;
   cart.forEach(c=>{const t=lineTotal(c);if(t!==null)tot+=t;else pes=true;m+=`• ${c.n} — ${lineDesc(c)}${t!==null?" (≈ "+eur(t)+")":" (prix confirmé à la pesée)"}\n`;});
   m+=`\nTotal estimatif : ${eur(tot)}${pes?" + articles à la pesée":""}`;
   m+=`\n📍 Retrait : ${document.getElementById("cmode").value}`;
-  const d=document.getElementById("cdate").value,n=document.getElementById("cnom").value,o=document.getElementById("cnote").value;
-  if(d)m+=`\n🗓 Pour : ${d}`;if(n)m+=`\n👤 ${n}`;if(o)m+=`\n📝 ${o}`;
-  m+=`\n\n(Tarifs indicatifs — merci de me confirmer. À bientôt !)`;return m;
+  const d=document.getElementById("cdate").value,mom=(document.getElementById("cmoment")||{}).value||"",n=document.getElementById("cnom").value,o=document.getElementById("cnote").value;
+  if(d){const dt=new Date(d+"T00:00:00");const j=isNaN(dt)?d:dt.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});m+=`\n🗓 Pour le : ${j}${mom&&mom!=="Peu importe"?" ("+mom.toLowerCase()+")":""}`;}
+  if(n)m+=`\n👤 ${n}`;if(o)m+=`\n📝 ${o}`;
+  m+=`\n\nMerci beaucoup pour votre travail et vos bons produits ! 🙏\nJe reste en attente de votre confirmation. À très bientôt.`;return m;
 }
 function copierCommande(){navigator.clipboard.writeText(msgCommande()).then(()=>toast("Commande copiée ✓"));}
 function envoyerWA(){window.open("https://wa.me/33620772484?text="+encodeURIComponent(msgCommande()));}
@@ -574,6 +589,7 @@ function envoyerMail(){location.href="mailto:lamaisondesrillettes@bbox.fr?subjec
 
 window.addEventListener("scroll",function(){var b=document.getElementById("toTop");if(b)b.classList.toggle("show",(window.scrollY||document.documentElement.scrollTop||0)>480);},{passive:true});
 try{show("catalogue");}catch(e){try{content.innerHTML="";show("catalogue");}catch(_){}}
+(function(){var cd=document.getElementById("cdate");if(cd)cd.min=new Date().toISOString().slice(0,10);})();
 document.querySelectorAll(".rv").forEach(function(el){el.classList.add("in");});
 </script>
 </body>
