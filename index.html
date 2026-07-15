@@ -588,7 +588,7 @@ function notifierN8n(canal){
       body:JSON.stringify({nom:n, mode:mode, canal:canal, details:msgCommande()})}).catch(function(){});
   }catch(e){}
 }
-function envoyerWA(){notifierN8n("WhatsApp");window.open("https://wa.me/33620772484?text="+encodeURIComponent(msgCommande()));}
+function envoyerWA(){notifierN8n("WhatsApp");toast("Il ne reste plus qu'à appuyer sur Envoyer dans WhatsApp ➜");window.open("https://wa.me/33620772484?text="+encodeURIComponent(msgCommande()));}
 function envoyerMail(){notifierN8n("Mail");location.href="mailto:lamaisondesrillettes@bbox.fr?subject="+encodeURIComponent("Commande — La Maison des Rillettes")+"&body="+encodeURIComponent(msgCommande());}
 
 window.addEventListener("scroll",function(){var b=document.getElementById("toTop");if(b)b.classList.toggle("show",(window.scrollY||document.documentElement.scrollTop||0)>480);},{passive:true});
