@@ -581,8 +581,15 @@ function msgCommande(){
   m+=`\n\nMerci beaucoup pour votre travail et vos bons produits ! 🙏\nJe reste en attente de votre confirmation. À très bientôt.`;return m;
 }
 function copierCommande(){navigator.clipboard.writeText(msgCommande()).then(()=>toast("Commande copiée ✓"));}
-function envoyerWA(){window.open("https://wa.me/33620772484?text="+encodeURIComponent(msgCommande()));}
-function envoyerMail(){location.href="mailto:lamaisondesrillettes@bbox.fr?subject="+encodeURIComponent("Commande — La Maison des Rillettes")+"&body="+encodeURIComponent(msgCommande());}
+function notifierN8n(canal){
+  try{
+    var n=document.getElementById("cnom").value||"", mode=document.getElementById("cmode").value||"";
+    fetch("https://lmdr.app.n8n.cloud/webhook/commande-lmdr",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({nom:n, mode:mode, canal:canal, details:msgCommande()})}).catch(function(){});
+  }catch(e){}
+}
+function envoyerWA(){notifierN8n("WhatsApp");window.open("https://wa.me/33620772484?text="+encodeURIComponent(msgCommande()));}
+function envoyerMail(){notifierN8n("Mail");location.href="mailto:lamaisondesrillettes@bbox.fr?subject="+encodeURIComponent("Commande — La Maison des Rillettes")+"&body="+encodeURIComponent(msgCommande());}
 
 window.addEventListener("scroll",function(){var b=document.getElementById("toTop");if(b)b.classList.toggle("show",(window.scrollY||document.documentElement.scrollTop||0)>480);},{passive:true});
 try{show("catalogue");}catch(e){try{content.innerHTML="";show("catalogue");}catch(_){}}
